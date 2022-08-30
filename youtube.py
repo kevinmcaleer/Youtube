@@ -1,40 +1,27 @@
-from secret import api_key
+from webbrowser import get
+import scrapetube
+from pprint import pprint
+import yaml
 
-from googleapiclient.discovery import build
+videos = scrapetube.get_channel("UCuoS-cgppnO46VCcQi81jvQ", sort_by="newest")
+x=-1
 
-# youtube = build('youtube', 'v3', developerKey=api_key)
+yaml_file = open("youtube.yaml", "w")
 
-# stats = youtube.channels().list(part='id, snippet', forUsername='kevinmcaleer28').execute()
+yaml_content = []
 
-# print(stats)
 
-import urllib
-import json
+def get_video_info(videos):
+    print("Getting video info...")
+    for video in videos:
+        video_id = video['videoId']
+        title = video['title']['runs'][x+1]['text']
+        views = video['viewCountText']['simpleText'].replace(" views","")
+        published = video['publishedTimeText']['simpleText']
+        yaml_content.append({title: {'view':views, 'published':published,'video_id':video_id}})
 
-def get_all_video_in_channel(channel_id):
+    yaml.dump(yaml_content, yaml_file)
+    yaml_file.close()
 
-    base_video_url = 'https://www.youtube.com/watch?v='
-    base_search_url = 'https://www.googleapis.com/youtube/v3/search?'
-
-    first_url = base_search_url+'key={}&channelId={}&part=snippet,id&order=date&maxResults=25'.format(api_key, channel_id)
-
-    video_links = []
-    url = first_url
-    while True:
-        inp = urllib.request(url)
-       
-        resp = json.load(inp)
-
-        for i in resp['items']:
-            if i['id']['kind'] == "youtube#video":
-                video_links.append(base_video_url + i['id']['videoId'])
-
-        try:
-            next_page_token = resp['nextPageToken']
-            url = first_url + '&pageToken={}'.format(next_page_token)
-        except:
-            break
-    return video_links
-
-vid_list = get_all_video_in_channel('UCuoS-cgppnO46VCcQi81jvQ')
-print(vid_list)
+get_video_info(videos)
+print("youtube.yaml file created")
