@@ -12,7 +12,7 @@ yaml_content = []
 
 
 def get_video_info(videos):
-
+    print("Getting video info...")
     for video in videos:
         video_id = video['videoId']
         title = video['title']['runs'][x+1]['text']
@@ -24,8 +24,4 @@ def get_video_info(videos):
     yaml_file.close()
 
 get_video_info(videos)
-
-load_data = yaml.load_all(open("youtube.yaml"), Loader=yaml.SafeLoader)
-
-for item in load_data:
-    print(item)
+print("youtube.yaml file created")
