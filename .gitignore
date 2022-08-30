@@ -1,0 +1,7 @@
+venv
+.DS_Store
+secret.py
+*.yml
+*.yaml
+*.json
+*.csv
