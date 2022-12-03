@@ -14,10 +14,18 @@ yaml_content = []
 def get_video_info(videos):
     print("Getting video info...")
     for video in videos:
+        print(f'video = {video}')
         video_id = str(video['videoId'])
         title = str(video['title']['runs'][x+1]['text'].replace("/","//").replace('-',',').replace(' ,',',')).replace('!',".")
-        views = str(video['viewCountText']['simpleText'].replace(" views",""))
-        published = str(video['publishedTimeText']['simpleText'])
+        try:
+            views = str(video['viewCountText']['simpleText'].replace(" views",""))
+        except:
+            views = "0"
+        try:
+            published = str(video['publishedTimeText']['simpleText'])
+        except:
+            published = "not published yet"
+
         yaml_content.append({'title':title, 'view':views, 'published':published,'video_id':video_id})
 
     yaml.dump(yaml_content, yaml_file, default_flow_style=False)
