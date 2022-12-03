@@ -14,7 +14,7 @@ yaml_content = []
 def get_video_info(videos):
     print("Getting video info...")
     for video in videos:
-        print(f'video = {video}')
+        # print(f'video = {video}')
         video_id = str(video['videoId'])
         title = str(video['title']['runs'][x+1]['text'].replace("/","//").replace('-',',').replace(' ,',',')).replace('!',".")
         try:
