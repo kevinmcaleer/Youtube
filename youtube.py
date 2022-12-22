@@ -4,6 +4,16 @@ from pprint import pprint
 import yaml
 
 videos = scrapetube.get_channel("UCuoS-cgppnO46VCcQi81jvQ", sort_by="newest")
+
+# streams = scrapetube.get_channel("UCuoS-cgppnO46VCcQi81jvQ", sort_by="newest", content_type="streams")
+# prerecorded =scrapetube.get_channel("UCuoS-cgppnO46VCcQi81jvQ", sort_by="newest", content_type="videos")
+# shorts = scrapetube.get_channel("UCuoS-cgppnO46VCcQi81jvQ", sort_by="newest", content_type="shorts")
+
+# added_shorts = [j for i in [videos, shorts] for j in i]
+# added_streams = [j for i in [added_shorts, streams] for j in i]
+
+# videos = streams
+
 x=-1
 
 yaml_file = open("youtube.yaml", "w")
@@ -14,7 +24,7 @@ yaml_content = []
 def get_video_info(videos):
     print("Getting video info...")
     for video in videos:
-        # print(f'video = {video}')
+        print(f'video = {video}')
         video_id = str(video['videoId'])
         title = str(video['title']['runs'][x+1]['text'].replace("/","//").replace('-',',').replace(' ,',',')).replace('!',".")
         try:
